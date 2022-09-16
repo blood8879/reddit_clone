@@ -10,19 +10,10 @@ const SubPage = () => {
     const [ownSub, setOwnSub] = useState(false);
     const { authenticated, user } = useAuthState();
 
-    const fetcher = async (url: string) => {
-        try {
-            const res = await axios.get(url);
-            return res.data;
-        } catch (e: any) {
-            throw e.response.data;
-        }
-    }
-
     const fileInputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
     const subName = router.query.sub;
-    const { data: sub, error } = useSWR(subName ? `/subs/${subName}` : null, fetcher);
+    const { data: sub, error } = useSWR(subName ? `/subs/${subName}` : null);
 
     useEffect(() => {
         if(!sub || !user) return;
